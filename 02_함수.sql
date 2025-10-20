@@ -49,7 +49,7 @@ SELECT '절대값 같음' FROM DUAL WHERE ABS(10) = ABS(-10);
 -- EMPLOYEE 테이블에서 사원의 월급을 100만으로 나눴을 때 나머지 값 조회
 SELECT EMP_NAME, SALARY, MOD(SALARY, 1000000) FROM EMPLOYEE;
 
-- EMPLOYEE 테이블에서 사번이 짝수인 사원의 사번, 이름 조회
+-- EMPLOYEE 테이블에서 사번이 짝수인 사원의 사번, 이름 조회
 SELECT EMP_ID, EMP_NAME FROM EMPLOYEE WHERE MOD(EMP_ID, 2) = 0;
 
 -- ROUND(숫자 | 컬럼명 [, 소수점 위치]) : 반올림
@@ -59,7 +59,7 @@ SELECT ROUND(123.456) FROM DUAL; -- 123
 SELECT ROUND(123.456, 1) FROM DUAL; - -123.5
 
 -- CEIL(숫자 | 컬럼명) : 올림
--- FLOOR{숫자, 컬럼명) : 내림
+-- FLOOR(숫자, 컬럼명) : 내림
 -- 둘 다 소수점 처째 자리에서 올림, 내림 처리
 SELECT CEIL(123.1), FLOOR(123.9) FROM DUAL; -- 124, 123
 
@@ -121,7 +121,6 @@ SELECT TO_CHAR(1000000, '9,999,999') || '원' FROM DUAL; -- 1,000,000원
 SELECT TO_CHAR(1000000, '9,999,999L') FROM DUAL; -- 1,000,000￦
 SELECT TO_CHAR(1000000, 'L9,999,999') FROM DUAL; -- ￦1,000,000
 
--- 날짜 -> 문자 변환 시 포맷 패턴
 -- YYYY : 년도 / YY : 년도(짧게)
 -- MM : 월, DD : 일, AM or PM : 오전 or 오후, HH : 시간, HH24 : 24시간 표기법
 -- MI : 분, SS : 초, DAY : 요일(전체), DY : 요일(요일명만 표시)
