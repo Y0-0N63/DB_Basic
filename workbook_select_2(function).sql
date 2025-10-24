@@ -46,6 +46,37 @@ WHERE STUDENT_NO NOT LIKE 'A%';
 
 -- 9. 학번이 A517178인 한아름 학생의 학점 총 평점을 구하는 SQL문을 작성하시오.
 -- 단, 이때 출력 화면의 헤더는 '평점'이라고 찍히게 하고, 점수는 반올림하여 소수점 이하 한 자리까지만 표시한다.
-SELECT * FROM TB_GRADE;
-SELECT * FROM TB_CLASS;
 SELECT STUDENT_NO FROM TB_STUDENT WHERE STUDENT_NO = 'A517178' AND STUDENT_NAME = '한아름';
+SELECT ROUND((SUM(POINT) / COUNT(POINT)), 1) 평점 FROM TB_GRADE 
+WHERE STUDENT_NO = (SELECT STUDENT_NO FROM TB_STUDENT WHERE STUDENT_NO = 'A517178' AND STUDENT_NAME = '한아름');
+
+-- 10. 학과별 학생수를 구하여 "학과번호", "학생수(명)"의 형태로 헤더를 만들어 결과값이 출력되도록 하시오
+SELECT DEPARTMENT_NO 학과번호, COUNT(DEPARTMENT_NO) "학생수(명)"
+FROM TB_STUDENT GROUP BY(DEPARTMENT_NO) ORDER BY DEPARTMENT_NO;
+
+-- 11. 지도 교수를 배정받지 못한 학생의 수는 몇 명 정도 되는지 알아내는 SQL문을 작성하시오
+SELECT COUNT(*) FROM TB_STUDENT WHERE COACH_PROFESSOR_NO IS NULL;
+
+-- 12. 학번이 A112113인 김고운 학생의 년도별 평점을 구하는 SQL문 작성
+-- 단, 헤더는 '년도', '년도별 평점', 점수는 반올림하여 소수점 이하 한 자리까지만 표시
+SELECT * FROM TB_GRADE;
+SELECT SUBSTR(TERM_NO, 1, 4) 년도, ROUND(SUM(POINT) / COUNT(TERM_NO), 1) "년도별 평점"
+FROM TB_GRADE WHERE STUDENT_NO = 'A112113'
+GROUP BY SUBSTR(TERM_NO , 1, 4)
+ORDER BY 년도;
+
+-- 13. 학과별 휴학생 수를 파악하고자 한다. 학과 번호와 휴학생 수를 표시하는 SQL문 작성
+SELECT DEPARTMENT_NO 학과코드명, SUM(DECODE(ABSENCE_YN, 'Y', 1, 'N', 0)) "휴학생 수"
+FROM TB_STUDENT
+GROUP BY DEPARTMENT_NO
+ORDER BY DEPARTMENT_NO;
+
+-- 14. 춘 대학교에 다니는 동명이인 학생들의 이름을 찾는 SQL문 작성
+SELECT STUDENT_NAME "동일이름", COUNT(*) AS "동명인 수"
+FROM TB_STUDENT
+GROUP BY STUDENT_NAME HAVING COUNT(*) > 1
+ORDER BY 동일이름;
+
+-- 15. 학번이 A112113인 김고운 학생의 년도, 학기별 평점과 년도별 누적 평점, 총평점을 구하는 SQL문 작성
+-- 단, 평점은 소수점 1자리까지만 반올림하여 표시
+SELECT * FROM TB_STUDENT;
