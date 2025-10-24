@@ -39,4 +39,13 @@ SELECT TO_DATE('49/10/11', 'YY/MM/DD') FROM DUAL; -- 2049-10-11 00:00:00.000
 SELECT TO_DATE('99/10/11', 'RR/MM/DD') FROM DUAL; -- 1999-10-11 00:00:00.000
 SELECT TO_DATE('49/10/11', 'RR/MM/DD') FROM DUAL; -- 2049-10-11 00:00:00.000
 
--- 8. 춘 기술대학교의 2000년도 이후 입학자들은 학번이 A로 시작하게 되어있다. 2000년도 이전 학번을 받은 학생들의 학번과 이름을 보여주는 SQL 문장 작성
+-- 8. 춘 기술대학교의 2000년도 이후 입학자들은 학번이 A로 시작하게 되어있다. 
+-- 2000년도 이전 학번을 받은 학생들의 학번과 이름을 보여주는 SQL 문장 작성
+SELECT STUDENT_NO, STUDENT_NAME FROM TB_STUDENT
+WHERE STUDENT_NO NOT LIKE 'A%';
+
+-- 9. 학번이 A517178인 한아름 학생의 학점 총 평점을 구하는 SQL문을 작성하시오.
+-- 단, 이때 출력 화면의 헤더는 '평점'이라고 찍히게 하고, 점수는 반올림하여 소수점 이하 한 자리까지만 표시한다.
+SELECT * FROM TB_GRADE;
+SELECT * FROM TB_CLASS;
+SELECT STUDENT_NO FROM TB_STUDENT WHERE STUDENT_NO = 'A517178' AND STUDENT_NAME = '한아름';
