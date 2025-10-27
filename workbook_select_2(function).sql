@@ -79,4 +79,8 @@ ORDER BY 동일이름;
 
 -- 15. 학번이 A112113인 김고운 학생의 년도, 학기별 평점과 년도별 누적 평점, 총평점을 구하는 SQL문 작성
 -- 단, 평점은 소수점 1자리까지만 반올림하여 표시
-SELECT * FROM TB_STUDENT;
+SELECT NVL(SUBSTR(TERM_NO, 1, 4), ' ') 년도, NVL(SUBSTR(TERM_NO , 5, 2), ' ') 학기,
+ROUND(AVG(POINT), 1) 평점
+FROM TB_GRADE WHERE STUDENT_NO ='A112113'
+GROUP BY ROLLUP(SUBSTR(TERM_NO, 1, 4), SUBSTR(TERM_NO , 5, 2))
+ORDER BY 년도;

@@ -7,6 +7,9 @@ SELECT DEPARTMENT_NAME || '의 정원은 ' "학과별" , CAPACITY || '명 입니
 
 -- 3. "국어국문학과"에 다니는 여학생 중 현재 휴학 중인 여학생을 찾아 출력하시오.
 -- 국문학과의 '학과 코드(DEPARTMENT_NO)'는 학과 테이블(TB_DEPARTMENT)을 조회해서 찾아내도록 하자
+SELECT 
+
+
 SELECT STUDENT_NAME FROM TB_STUDENT
 WHERE DEPARTMENT_NO = (SELECT DEPARTMENT_NO FROM TB_DEPARTMENT WHERE DEPARTMENT_NAME = '국어국문학과') -- 국문학과 코드 조회
 AND

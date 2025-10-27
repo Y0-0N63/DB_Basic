@@ -1,5 +1,5 @@
 -- GROUP BY절 : 같은 값들이 여러개 기록된 컬럼을 가지고 같은 값들을 하나의 그룹으로 묶음
--- GROUP BY 컬럼명 | 함수식, ..
+-- GROUP BY 컬럼명 | 함수식, ...
 -- 여러개의 값을 묶어서 하나로 처리할 목적으로 사용
 -- 그룹으로 묶은 값에 대해서 SELECT절에서 그룹함수를 사용함
 -- 그룹함수는 단 한개의 결과값만 산출 > 그룹이 여러개일 경우 오류 발생
@@ -37,6 +37,10 @@ GROUP BY DEPT_CODE; -- 부서의 (WHERE절에서 구한 부서 코드가 D5, D6�
 
 SELECT * FROM EMPLOYEE;
 -- EMPLOYEE 테이블에서(FROM) 2000년도 이후 입사자들의 직급별(GROUP BY JOB_CODE) 직급 코드, 급여합을 조회(SELECT)
+SELECT JOB_CODE, SUM(SALARY) FROM EMPLOYEE
+WHERE EXTRACT(YEAR FROM HIRE_DATE) >= 2000
+GROUP BY JOB_CODE;
+
 SELECT JOB_CODE, SUM(SALARY)
 FROM EMPLOYEE WHERE SUBSTR(TO_CHAR(HIRE_DATE, 'YYYY'), 1, 4) >= '2000'
 --HIRE_DATE >= TO_DATE('2000-01-01')
@@ -64,10 +68,8 @@ ORDER BY DEPT_CODE;
 
 -- EMPLOYEE 테이블에서 직급별 인원수가 5명 이하인 직급의 직급 코드, 인원수 조회
 -- 단, 직급 코드 오름차순 정렬
-SELECT JOB_CODE, COUNT(*)
-FROM EMPLOYEE
-GROUP BY JOB_CODE
-HAVING COUNT(*) <= 5 -- HAVING 절에는 그룹 함수가 반드시 작성된다
+SELECT JOB_CODE, COUNT(*) FROM EMPLOYEE
+GROUP BY JOB_CODE HAVING COUNT(*) <= 5 -- HAVING 절에는 그룹 함수가 반드시 작성된다
 ORDER BY 1; -- ORDER BY 절에는 별칭, 컬럼명, 컬럼 순서로 사용 가능!
 
 -- 집계 함수 (ROLLUP, CUBE)
@@ -78,7 +80,7 @@ ORDER BY 1; -- ORDER BY 절에는 별칭, 컬럼명, 컬럼 순서로 사용 가
 SELECT DEPT_CODE, JOB_CODE, COUNT(*)
 FROM EMPLOYEE
 GROUP BY ROLLUP(DEPT_CODE, JOB_CODE)
-ORDER BY 1;
+ORDER BY 1;	
 
 -- CUBE : GROUP BY 절에 작성된 모든 컬럼의 중간 집계를 처리하는 함수
 SELECT DEPT_CODE, JOB_CODE, COUNT(*)
@@ -98,7 +100,7 @@ ORDER BY 1;
 -- EMPLOYEE 테이블에서 부서 코드가 'D5'인 사원의 사번, 이름 부서 코드, 급여 조회
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY FROM EMPLOYEE WHERE DEPT_CODE = 'D5'
 UNION
--- 급여가 300만 원 초과인 사원의 사번, 이름, 부서 코드, 급여 조회
+-- 급여가 300만 원 초과인 사원의 사번, 이름, 부서 코드, 급여 조회 
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY FROM EMPLOYEE WHERE SALARY > 3000000;
 
 SELECT EMP_ID, EMP_NAME, DEPT_CODE, SALARY FROM EMPLOYEE WHERE DEPT_CODE = 'D5'
